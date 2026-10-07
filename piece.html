@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品 — GALLERY BRUTAL</title>
+  <meta name="description" content="单幅摄影作品展览" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/piece.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="brand" href="index.html">GALLERY<span class="dot">.</span>BRUTAL</a>
+    <ul class="nav-menu">
+      <li><a href="color.html" data-transition>彩色</a></li>
+      <li><a href="bw.html" data-transition>黑白</a></li>
+      <li><a href="about.html" data-transition>关于</a></li>
+    </ul>
+  </nav>
+  <main class="piece-page">
+    <div class="piece-top">
+      <nav class="crumbs">
+        <a href="index.html" data-transition>首页</a>
+        <span class="sep">/</span>
+        <a id="crumbZone" href="color.html" data-transition>彩色</a>
+        <span class="sep">/</span>
+        <span class="current" id="crumbCurrent">作品 01</span>
+      </nav>
+      <div class="piece-navbtns">
+        <button class="nav-btn" id="prevBtn" aria-label="上一幅">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>上一幅</span>
+        </button>
+        <button class="nav-btn" id="nextBtn" aria-label="下一幅">
+          <span>下一幅</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <section class="piece-stage">
+      <img id="pieceImage" src="" alt="" />
+    </section>
+    <div class="piece-caption" id="pieceCaption"></div>
+    <section class="piece-body" id="pieceBody">
+      <aside class="piece-body-aside">
+        <strong id="asideNum">01</strong>
+        <span id="asideZone">彩色</span>
+      </aside>
+      <div class="piece-essay" id="pieceEssay"></div>
+    </section>
+    <div class="section-label">同展区其他作品 / MORE FROM THIS ZONE</div>
+    <div class="more-grid" id="moreGrid"></div>
+    <div class="zone-foot" style="margin-top:1rem;">
+      <a class="text-link" id="backToZone" href="color.html" data-transition>← 返回展区</a>
+      <a class="text-link" href="index.html" data-transition>返回首页</a>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <span>© 2026 GALLERY BRUTAL</span>
+    <span id="footZone">彩色</span>
+    <a href="about.html" data-transition>关于展览</a>
+  </footer>
+  <script src="data/pieces.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id') || PIECES[0].id;
+      let index = getPieceIndex(id);
+      if (index === -1) index = 0;
+      const piece = PIECES[index];
+      const isBw = piece.group === 'b';
+      const zoneName = isBw ? '黑白' : '彩色';
+      const zoneFile = isBw ? 'bw.html' : 'color.html';
+      const groupList = getPiecesByGroup(piece.group);
+      const inGroup = groupList.findIndex(function(p) { return p.id === piece.id; });
+      const groupTotal = String(groupList.length).padStart(2, '0');
+      document.title = piece.title + ' — ' + zoneName + '展区 — GALLERY BRUTAL';
+      document.getElementById('crumbZone').textContent = zoneName;
+      document.getElementById('crumbZone').href = zoneFile;
+      document.getElementById('crumbCurrent').textContent = piece.title;
+      document.getElementById('pieceImage').src = piece.image;
+      document.getElementById('pieceImage').alt = piece.title;
+      const titleLine = [piece.title, piece.titleEn ? '（' + piece.titleEn + '）' : '', piece.year ? ' · ' + piece.year : ''].join('');
+      const techLine = [piece.medium, piece.camera].filter(function(v) { return v && v.trim(); }).join('｜');
+      const cells = [
+        { label: '作品', value: titleLine },
+        { label: '展区', value: zoneName + '展区 · ' + piece.num + ' / ' + groupTotal },
+        { label: '拍摄地点', value: piece.location },
+        { label: '工艺 / 器材', value: techLine }
+      ].filter(function(c) { return c.value && c.value.trim(); });
+      document.getElementById('pieceCaption').innerHTML = cells.map(function(c) {
+        return '<div><div class="cap-label">' + c.label + '</div><div class="cap-value">' + c.value + '</div></div>';
+      }).join('');
+      document.getElementById('asideNum').textContent = zoneName + ' ' + piece.num + ' / ' + groupTotal;
+      document.getElementById('asideZone').textContent = isBw ? 'Monochrome' : 'Color';
+      document.getElementById('footZone').textContent = zoneName + '展区 · ' + piece.num + ' / ' + groupTotal;
+      document.getElementById('backToZone').href = zoneFile;
+      const essayParas = (piece.essay || []).filter(function(p) { return p && p.trim(); });
+      if (essayParas.length) {
+        document.getElementById('pieceEssay').innerHTML = essayParas.map(function(p) { return '<p>' + p + '</p>'; }).join('');
+      } else {
+        document.getElementById('pieceBody').style.display = 'none';
+      }
+      const prevUrl = 'piece.html?id=' + groupList[(inGroup - 1 + groupList.length) % groupList.length].id;
+      const nextUrl = 'piece.html?id=' + groupList[(inGroup + 1) % groupList.length].id;
+      document.getElementById('prevBtn').addEventListener('click', function() { window.location.href = prevUrl; });
+      document.getElementById('nextBtn').addEventListener('click', function() { window.location.href = nextUrl; });
+      initKeyboardNav(prevUrl, nextUrl);
+      document.getElementById('moreGrid').innerHTML = groupList.filter(function(p) { return p.id !== piece.id; }).slice(0, 3).map(function(p) {
+        return '<a class="more-item reveal" href="piece.html?id=' + p.id + '" data-transition><div class="more-item-frame"><img src="' + p.thumb + '" alt="' + p.title + '" loading="lazy" /></div><div class="more-item-cap"><span class="more-item-num">' + p.num + '</span><span class="more-item-name">' + p.title + '</span></div></a>';
+      }).join('');
+      initScrollReveal();
+    })();
+  </script>
+</body>
+</html>
