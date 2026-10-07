@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>关于 — GALLERY BRUTAL</title>
+  <meta name="description" content="关于艺术家与本次展览" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/about.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="brand" href="index.html">GALLERY<span class="dot">.</span>BRUTAL</a>
+    <ul class="nav-menu">
+      <li><a href="color.html" data-transition>彩色</a></li>
+      <li><a href="bw.html" data-transition>黑白</a></li>
+      <li><a href="about.html" class="is-active">关于</a></li>
+    </ul>
+  </nav>
+  <main class="about-page">
+    <header class="about-hero">
+      <nav class="crumbs" style="margin-bottom:2rem;">
+        <a href="index.html" data-transition>首页</a>
+        <span class="sep">/</span>
+        <span class="current">关于</span>
+      </nav>
+      <div class="about-kicker">关于艺术家 / About</div>
+      <h1 class="display">我用相机<br /><em>留住</em>光</h1>
+    </header>
+    <section class="about-lede">
+      <aside class="aside">展览陈述<br />Statement</aside>
+      <div class="body reveal">
+        <p>我是一名独立摄影师。这个网站是我个人的线上展览空间，收录了我挑选出的作品，按「彩色」与「黑白」分为两个展区。</p>
+        <p>彩色与黑白不是两种风格，而是两种观看方式。彩色关乎情绪与温度，黑白关乎结构与秩序。我把它们分开展示，希望你能在同一场展览里，感受到两种截然不同的呼吸节奏。</p>
+        <p>GALLERY BRUTAL 的名字来自粗野主义（Brutalism）：一种拒绝装饰、暴露材料本性的建筑语言。这也正是这个网站的原则——没有轮播、没有弹窗、没有花哨的动效。每幅作品都有独立的展览页面，我希望你能像走进一间真正的画廊那样，慢下来，一次只看一张。</p>
+      </div>
+    </section>
+    <section class="stat-table">
+      <div class="stat-row">
+        <div class="stat-key">展览结构</div>
+        <div class="stat-val" id="statStructure">—</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key">观看方式</div>
+        <div class="stat-val">一级页面用于导航（不含图片）；二级页面按展区展示全部照片；三级页面为单幅作品，含完整展签与说明。单幅页面支持键盘 ← → 切换。</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key">Email</div>
+        <div class="stat-val"><a href="mailto:hello@gallerybrutal.com">hello@gallerybrutal.com</a></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key">限量版画</div>
+        <div class="stat-val">可按需询价 · 每版 25 张</div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="index.html" data-transition>← 返回首页</a>
+    <span>© 2026 GALLERY BRUTAL</span>
+    <span>All rights reserved</span>
+  </footer>
+  <script src="data/pieces.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      const c = getPiecesByGroup('c').length;
+      const b = getPiecesByGroup('b').length;
+      document.getElementById('statStructure').innerHTML = '两个展区，共 ' + (c + b) + ' 幅作品 —— 彩色 ' + c + ' 幅、黑白 ' + b + ' 幅。';
+    })();
+  </script>
+</body>
+</html>
