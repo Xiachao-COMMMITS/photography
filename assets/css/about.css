@@ -1,0 +1,99 @@
+/* ============================================
+   关于页
+   ============================================ */
+
+.about-page { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
+.about-hero {
+  padding: clamp(2.5rem, 7vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--rule);
+}
+
+.about-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+}
+
+.about-hero h1 {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 8vw, 6.5rem);
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+  max-width: 16ch;
+}
+
+.about-hero h1 em { font-style: normal; color: var(--ink-3); font-weight: 400; }
+
+.about-lede {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.about-lede .aside {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-top: 2px solid var(--accent);
+  padding-top: 1rem;
+  line-height: 2;
+  height: fit-content;
+}
+
+.about-lede .body {
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  line-height: 1.9;
+  max-width: 68ch;
+}
+
+.about-lede .body p { margin-bottom: 1.5rem; }
+.about-lede .body p:last-child { margin-bottom: 0; }
+
+.about-lede .body p:first-child::first-letter {
+  float: left;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 700;
+  font-size: 3.6rem;
+  line-height: 0.82;
+  padding: 0.25rem 0.6rem 0 0;
+  color: var(--accent);
+}
+
+.stat-table { padding: clamp(2rem, 5vw, 4rem) 0; border-bottom: 1px solid var(--rule); }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) 2fr;
+  gap: clamp(1rem, 4vw, 3rem);
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+
+.stat-row:last-child { border-bottom: 0; }
+
+.stat-key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.stat-val { font-size: 0.98rem; line-height: 1.7; }
+.stat-val a { border-bottom: 1px solid var(--rule-2); }
+.stat-val a:hover { color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 900px) {
+  .about-lede { grid-template-columns: 1fr; gap: 2rem; }
+  .stat-row { grid-template-columns: 1fr; gap: 0.4rem; }
+}
