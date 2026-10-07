@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GALLERY BRUTAL — 个人摄影展</title>
+  <meta name="description" content="个人摄影展览 · 彩色与黑白两个展区" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="brand" href="index.html">GALLERY<span class="dot">.</span>BRUTAL</a>
+    <ul class="nav-menu">
+      <li><a href="color.html" data-transition>彩色</a></li>
+      <li><a href="bw.html" data-transition>黑白</a></li>
+      <li><a href="about.html" data-transition>关于</a></li>
+    </ul>
+  </nav>
+  <main class="landing">
+    <div class="landing-meta">
+      <div class="landing-meta-col">
+        <span class="mono">个人摄影展</span>
+        <span class="mono dim">Solo Exhibition</span>
+      </div>
+      <div class="landing-meta-col right">
+        <span class="mono">2026</span>
+        <span class="mono dim" id="metaCount">—</span>
+      </div>
+    </div>
+    <div class="landing-title">
+      <span class="landing-kicker">彩色 · 黑白 · 两个展区</span>
+      <h1 class="display display-jumbo reveal visible">夏潮的<br /><em>作品集</em></h1>
+      <p class="landing-sub reveal visible">一场分为「彩色」与「黑白」两个展区的个人摄影展。点击下方展区进入，每幅作品都有独立的展览页面与完整展签说明。</p>
+    </div>
+    <div>
+      <div class="entry-list">
+        <a class="entry" href="color.html" data-transition>
+          <span class="entry-num">展区 01</span>
+          <span class="entry-name">彩色</span>
+          <span class="entry-en">Color</span>
+          <span class="entry-count" id="entryCountC">—</span>
+          <span class="entry-arrow">→</span>
+        </a>
+        <a class="entry" href="bw.html" data-transition>
+          <span class="entry-num">展区 02</span>
+          <span class="entry-name">黑白</span>
+          <span class="entry-en">Monochrome</span>
+          <span class="entry-count" id="entryCountB">—</span>
+          <span class="entry-arrow">→</span>
+        </a>
+      </div>
+      <div class="landing-foot">
+        <p class="note">本站为纯静态展览。一级页面不含图片，仅作导航；照片按展区组织在二级页面，单幅作品展出于三级页面。</p>
+        <a class="text-link" href="about.html" data-transition>关于展览 →</a>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <span>© 2026 GALLERY BRUTAL</span>
+    <span>个人摄影个展 · 彩色 / 黑白</span>
+    <a href="about.html" data-transition>关于艺术家</a>
+  </footer>
+  <script src="data/pieces.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      const c = getPiecesByGroup('c').length;
+      const b = getPiecesByGroup('b').length;
+      const total = c + b;
+      document.getElementById('metaCount').textContent = total + ' 件作品 · 2 个展区';
+      document.getElementById('entryCountC').textContent = c + ' 幅作品';
+      document.getElementById('entryCountB').textContent = b + ' 幅作品';
+    })();
+  </script>
+</body>
+</html>
