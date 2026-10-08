@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>作品 — GALLERY BRUTAL</title>
   <meta name="description" content="单幅摄影作品展览" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/piece.css" />
 </head>
@@ -41,7 +38,7 @@
       </div>
     </div>
     <section class="piece-stage">
-      <img id="pieceImage" src="" alt="" />
+      <img id="pieceImage" alt="" />
     </section>
     <div class="piece-caption" id="pieceCaption"></div>
     <section class="piece-body" id="pieceBody">
@@ -82,8 +79,11 @@
       document.getElementById('crumbZone').textContent = zoneName;
       document.getElementById('crumbZone').href = zoneFile;
       document.getElementById('crumbCurrent').textContent = piece.title;
-      document.getElementById('pieceImage').src = piece.image;
-      document.getElementById('pieceImage').alt = piece.title;
+      const stageImg = document.getElementById('pieceImage');
+      stageImg.alt = piece.title;
+      stageImg.width = piece.w;
+      stageImg.height = piece.h;
+      stageImg.setAttribute('data-src', piece.image + '|' + piece.jpg);
       const titleLine = [piece.title, piece.titleEn ? '（' + piece.titleEn + '）' : '', piece.year ? ' · ' + piece.year : ''].join('');
       const techLine = [piece.medium, piece.camera].filter(function(v) { return v && v.trim(); }).join('｜');
       const cells = [
@@ -111,8 +111,9 @@
       document.getElementById('nextBtn').addEventListener('click', function() { window.location.href = nextUrl; });
       initKeyboardNav(prevUrl, nextUrl);
       document.getElementById('moreGrid').innerHTML = groupList.filter(function(p) { return p.id !== piece.id; }).slice(0, 3).map(function(p) {
-        return '<a class="more-item reveal" href="piece.html?id=' + p.id + '" data-transition><div class="more-item-frame"><img src="' + p.thumb + '" alt="' + p.title + '" loading="lazy" /></div><div class="more-item-cap"><span class="more-item-num">' + p.num + '</span><span class="more-item-name">' + p.title + '</span></div></a>';
+        return '<a class="more-item reveal" href="piece.html?id=' + p.id + '" data-transition><div class="more-item-frame"><img data-src="' + p.thumb + '|' + p.jpg + '" alt="' + p.title + '" width="' + p.tw + '" height="' + p.th + '" loading="lazy" decoding="async" /></div><div class="more-item-cap"><span class="more-item-num">' + p.num + '</span><span class="more-item-name">' + p.title + '</span></div></a>';
       }).join('');
+      hydrateImages(document.querySelector('.piece-page'));
       initScrollReveal();
     })();
   </script>

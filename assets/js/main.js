@@ -1,6 +1,58 @@
 /* ============================================
-   共享交互 — 滚动进度 / 揭示 / 页面淡出转场
+   共享交互 — 图片多源加载 / 滚动进度 / 揭示 / 页面淡出转场
    ============================================ */
+
+/* 图片加速：GitHub Pages（github.io）在国内访问经常被限速或中途断流，
+   单张图可能几十秒才出来、甚至直接超时变成破图。
+   这里把图片放到 GitHub 加速镜像上取，并做「多源 + 超时 + 重试」：
+   镜像A → 镜像B → 本站相对路径 → 原始 JPG。
+   任何一个源先返回就用它，某个源卡住超过 IMG_TIMEOUT 就自动换下一个。 */
+const IMG_MIRRORS = [
+  'https://gh-proxy.com/https://raw.githubusercontent.com/Xiachao-COMMMITS/photography/main/',
+  'https://ghproxy.net/https://raw.githubusercontent.com/Xiachao-COMMMITS/photography/main/'
+];
+const IMG_TIMEOUT = 9000;
+
+function imageChain(webpPath, jpgName) {
+  const chain = IMG_MIRRORS.map(function (m) { return m + webpPath; });
+  chain.push(webpPath);
+  if (jpgName) chain.push(jpgName);
+  return chain;
+}
+
+function loadImageWithFallback(img, chain) {
+  let i = 0;
+  function tryNext() {
+    if (i >= chain.length) return;
+    const url = chain[i++];
+    let settled = false;
+    const timer = setTimeout(function () {
+      if (settled) return;
+      settled = true;
+      tryNext();
+    }, IMG_TIMEOUT);
+    img.addEventListener('load', function () {
+      settled = true;
+      clearTimeout(timer);
+    }, { once: true });
+    img.addEventListener('error', function () {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      tryNext();
+    }, { once: true });
+    img.src = url;
+  }
+  tryNext();
+}
+
+/* 把 <img data-src="缩略图|原图"> 变成带多源回退的真实图片 */
+function hydrateImages(scope) {
+  (scope || document).querySelectorAll('img[data-src]').forEach(function (img) {
+    const parts = img.getAttribute('data-src').split('|');
+    loadImageWithFallback(img, imageChain(parts[0], parts[1]));
+  });
+}
 
 function initScrollProgress() {
   const bar = document.createElement('div');

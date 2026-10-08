@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>黑白展区 — GALLERY BRUTAL</title>
   <meta name="description" content="个人摄影展 · 展区二 黑白" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/zone.css" />
 </head>
@@ -59,9 +56,12 @@
     (function () {
       const pieces = getPiecesByGroup('b');
       document.getElementById('zoneCount').textContent = pieces.length + ' 幅作品 / ' + pieces.length + ' PIECES';
-      document.getElementById('photoGrid').innerHTML = pieces.map(function(p, i) {
-        return '<article class="photo-card reveal" style="transition-delay:' + (i % 3) * 0.06 + 's"><a class="photo-card-link" href="piece.html?id=' + p.id + '" data-transition><div class="photo-frame"><img src="' + p.thumb + '" alt="' + p.title + '" loading="lazy" /></div><div class="photo-caption"><span class="photo-num">' + p.num + '</span><span class="photo-name">' + p.title + '</span><span class="photo-rule"></span></div></a></article>';
+      const grid = document.getElementById('photoGrid');
+      grid.innerHTML = pieces.map(function(p, i) {
+        const eager = i < 3;
+        return '<article class="photo-card reveal" style="transition-delay:' + (i % 3) * 0.06 + 's"><a class="photo-card-link" href="piece.html?id=' + p.id + '" data-transition><div class="photo-frame"><img data-src="' + p.thumb + '|' + p.jpg + '" alt="' + p.title + '" width="' + p.tw + '" height="' + p.th + '" ' + (eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"') + ' decoding="async" /></div><div class="photo-caption"><span class="photo-num">' + p.num + '</span><span class="photo-name">' + p.title + '</span><span class="photo-rule"></span></div></a></article>';
       }).join('');
+      hydrateImages(grid);
       initScrollReveal();
     })();
   </script>
